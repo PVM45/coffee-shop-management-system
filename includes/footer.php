@@ -6,8 +6,7 @@
         <div class="ftco-footer-widget mb-4">
           <h2 class="ftco-heading-2">About Us</h2>
           <p>
-            Far far away, behind the word mountains, far from the countries
-            Vokalia and Consonantia, there live the blind texts.
+            Tucked away from the city’s noise, in a quiet little corner, stands Teduh—a humble space where warmth is poured with every cup, and every guest is welcomed like an old friend returning home.
           </p>
           <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
             <li class="ftco-animate">
@@ -29,17 +28,17 @@
             <a class="blog-img mr-4" style="background-image: url(<?php echo url; ?>/images/image_1.jpg)"></a>
             <div class="text">
               <h3 class="heading">
-                <a href="#">Even the all-powerful Pointing has no control about</a>
+                <a href="#">Even the Sweetest Aroma Tells a Silent Story</a>
               </h3>
               <div class="meta">
                 <div>
-                  <a href="#"><span class="icon-calendar"></span> Sept 15, 2023</a>
+                  <a href="#"><span class="icon-calendar"></span> May 26, 2025</a>
                 </div>
                 <div>
                   <a href="#"><span class="icon-person"></span> Admin</a>
                 </div>
                 <div>
-                  <a href="#"><span class="icon-chat"></span> 19</a>
+                  <a href="#"><span class="icon-chat"></span> 2</a>
                 </div>
               </div>
             </div>
@@ -48,17 +47,17 @@
             <a class="blog-img mr-4" style="background-image: url(<?php echo url; ?>/images/image_2.jpg)"></a>
             <div class="text">
               <h3 class="heading">
-                <a href="#">Even the all-powerful Pointing has no control about</a>
+                <a href="#">Even the Loudest Days Pause for a Sip Here</a>
               </h3>
               <div class="meta">
                 <div>
-                  <a href="#"><span class="icon-calendar"></span> Sept 15, 2023</a>
+                  <a href="#"><span class="icon-calendar"></span> May 26, 2025</a>
                 </div>
                 <div>
                   <a href="#"><span class="icon-person"></span> Admin</a>
                 </div>
                 <div>
-                  <a href="#"><span class="icon-chat"></span> 19</a>
+                  <a href="#"><span class="icon-chat"></span> 4</a>
                 </div>
               </div>
             </div>
@@ -82,14 +81,13 @@
           <div class="block-23 mb-3">
             <ul>
               <li>
-                <span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California,
-                  USA</span>
+                <span class="icon icon-map-marker"></span><span class="text">Jl. Deposito No.39, Titi Papan, Kec. Medan Deli, Kota Medan, Sumatera Utara 20242</span>
               </li>
               <li>
-                <a href="#"><span class="icon icon-phone"></span><span class="text">+91 392 3929 210</span></a>
+                <a href="#"><span class="icon icon-phone"></span><span class="text">0812 3412 3412</span></a>
               </li>
               <li>
-                <a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a>
+                <a href="#"><span class="icon icon-envelope"></span><span class="text">taruhco@gmail.com</span></a>
               </li>
             </ul>
           </div>
@@ -99,8 +97,8 @@
     <div class="row">
       <div class="col-md-12 text-center">
         <p>
-          Copyright &copy; 2024 All rights reserved | Made with
-          <i class="icon-heart" aria-hidden="true"></i> by Nikhil Singh
+          Copyright &copy; 2025 All rights reserved | Made with
+          <i class="icon-heart" aria-hidden="true"></i> by Kelompok 9
         </p>
       </div>
     </div>
@@ -131,6 +129,10 @@
 <script src="<?php echo url; ?>/js/jquery.timepicker.min.js"></script>
 <script src="<?php echo url; ?>/js/scrollax.min.js"></script>
 <script src="<?php echo url; ?>/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 
 <script>
   $(document).ready(function() {
@@ -163,6 +165,49 @@
     });
   });
 </script>
-</body>
 
+<!-- JS Flatpickr -->
+<script>
+  flatpickr("#time", {
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i", // Format 24 jam
+    minTime: "08:00",
+    maxTime: "21:00",
+    time_24hr: true,
+    defaultHour: 8,
+    defaultMinute: 0,
+    onChange: function(selectedDates, dateStr, instance) {
+      const time = selectedDates[0];
+      const hour = time.getHours();
+      if (hour < 8 || hour >= 21) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Waktu Tidak Diperbolehkan',
+          text: 'Silakan pilih waktu antara 08:00 dan 21:00 (format 24 jam).',
+          confirmButtonText: 'Oke, Saya Mengerti',
+          timer: 4000,
+          timerProgressBar: true
+        });
+        instance.clear();
+      }
+    }
+  });
+
+   flatpickr("#date", {
+    minDate: new Date().fp_incr(1), // mulai besok
+    dateFormat: "Y-m-d",            // format tanggal
+    disable: [
+      {
+        from: "1900-01-01",
+        to: new Date()               // disable hari ini dan sebelumnya
+      }
+    ],
+  });
+</script>
+
+
+
+
+</body>
 </html>

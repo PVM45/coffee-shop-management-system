@@ -9,7 +9,16 @@ if (isset($_SESSION['username'])) {
 
 if (isset($_POST['submit'])) {
   if (empty($_POST['email']) or empty($_POST['password'])) {
-    echo "<script>alert('email or password are empty !!')</script>";
+     echo "
+    <script>
+      Swal.fire({
+        icon: 'warning',
+        title: 'Form Kosong!',
+        text: 'Email dan Password wajib diisi.',
+        confirmButtonText: 'Oke'
+      });
+    </script>
+    ";
   } else {
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -30,14 +39,37 @@ if (isset($_POST['submit'])) {
           $_SESSION['email'] = $row['email'];
           $_SESSION['user_id'] = $row['id'];
           // redirect to index page
-          echo "<script>alert('Logged in Successfully')</script>";
+
+          // echo "<script>alert('Logged in Successfully')</script>";
+          // echo "<script>window.location.href = '" . url . "/index.php';</script>";
+          $_SESSION['login_success'] = "Kamu berhasil login. Selamat datang, {$row['username']}!";
           echo "<script>window.location.href = '" . url . "/index.php';</script>";
+          exit();
+
         } else {
-          echo "<script>alert('email or password is incorrect !!')</script>";
+          echo "
+    <script>
+      Swal.fire({
+        icon: 'error',
+        title: 'Password Salah!',
+        text: 'Silakan periksa kembali password kamu.',
+        confirmButtonText: 'Ulangi'
+      });
+    </script>
+    ";
         }
       }
     } else {
-      echo "<script>alert('email or password is incorrect !!')</script>";
+      echo "
+    <script>
+      Swal.fire({
+        icon: 'error',
+        title: 'Email Tidak Ditemukan!',
+        text: 'Silakan periksa kembali email kamu.',
+        confirmButtonText: 'Oke'
+      });
+    </script>
+    ";
     }
   }
 }
@@ -70,13 +102,18 @@ if (isset($_POST['submit'])) {
             <div class="col-md-12">
               <div class="form-group">
                 <label for="email">Email</label>
-                <input name="email" id="email" type="text" class="form-control" placeholder="Email" />
+                <!-- <input name="email" id="email" type="text" class="form-control" placeholder="Email" /> -->
+                <input name="email" id="email" type="email" class="form-control" placeholder="Email"
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                  title="Masukkan format email yang valid, misalnya: kamu@email.com" required />
               </div>
             </div>
             <div class="col-md-12">
               <div class="form-group">
                 <label for="password">Password</label>
-                <input name="password" id="password" type="password" class="form-control" placeholder="Password" />
+                <!-- <input name="password" id="password" type="password" class="form-control" placeholder="Password" /> -->
+                <input name="password" id="password" type="password" class="form-control" placeholder="Password"
+                  pattern=".{6,}" title="Minimal 6 karakter" required />
               </div>
             </div>
             <div class="col-md-12">
@@ -91,8 +128,26 @@ if (isset($_POST['submit'])) {
               </div>
             </div>
           </div>
+      
+
         </form>
         <!-- END -->
+         <?php
+if (isset($_SESSION['register_success'])) {
+  echo "
+    <script>
+      Swal.fire({
+        icon: 'success',
+        title: 'Registrasi Berhasil!',
+        text: '{$_SESSION['register_success']}',
+        confirmButtonText: 'Okay 👍'
+      });
+    </script>
+  ";
+  unset($_SESSION['register_success']); // Hapus session setelah ditampilkan
+}
+?>
+
       </div>
       <!-- .col-md-8 -->
     </div>

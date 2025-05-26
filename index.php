@@ -12,7 +12,6 @@
             Tucked in a quiet corner of the city, Taruh flows like a gentle stream—where every sip of coffee carries warmth, and every passing moment becomes a story. We don’t just brew flavors, we supply your day with the comfort it needs.
           </p>
           <p>
-            <a href="auth/login.php" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a>
             <a href="menu.php" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a>
           </p>
         </div>
@@ -31,7 +30,6 @@
             Tucked in a quiet corner of the city, Taruh flows like a gentle stream—where every sip of coffee carries warmth, and every passing moment becomes a story. We don’t just brew flavors, we supply your day with the comfort it needs.
           </p>
           <p>
-            <a href="auth/login.php" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a>
             <a href="menu.php" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a>
           </p>
         </div>
@@ -50,7 +48,6 @@
             Tucked in a quiet corner of the city, Taruh flows like a gentle stream—where every sip of coffee carries warmth, and every passing moment becomes a story. We don’t just brew flavors, we supply your day with the comfort it needs..
           </p>
           <p>
-            <a href="auth/login.php" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a>
             <a href="menu.php" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a>
           </p>
         </div>
@@ -59,85 +56,7 @@
   </div>
 </section>
 
-<section class="ftco-intro">
-  <div class="container-wrap">
-    <div class="wrap d-md-flex align-items-xl-end">
-      <div class="info">
-        <div class="row no-gutters">
-          <div class="col-md-4 d-flex ftco-animate">
-            <div class="icon"><span class="icon-phone"></span></div>
-            <div class="text">
-              <h3>0812 3412 3412</h3>
-              <p>
-                Got a question or craving? Reach out. We’d love to hear from you.
-              </p>
-            </div>
-          </div>
-          <div class="col-md-4 d-flex ftco-animate">
-            <div class="icon"><span class="icon-my_location"></span></div>
-            <div class="text">
-              <h3>Jl. Deposito No.39</h3>
-              <p>
-              Titi Papan, Kec. Medan Deli, Kota Medan, Sumatera Utara 20242
-              </p>
-            </div>
-          </div>
-          <div class="col-md-4 d-flex ftco-animate">
-            <div class="icon"><span class="icon-clock-o"></span></div>
-            <div class="text">
-              <h3>Open Monday-Friday</h3>
-              <p>8:00am - 9:00pm</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="book p-4">
-        <h3>Book a Table</h3>
-        <form action="booking/book.php" method="POST" class="appointment-form">
-          <div class="d-md-flex">
-            <div class="form-group">
-              <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name*" />
-            </div>
-            <div class="form-group ml-md-4">
-              <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name" />
-            </div>
-          </div>
-          <div class="d-md-flex">
-            <div class="form-group">
-              <div class="input-wrap">
-                <div class="icon">
-                  <span class="ion-md-calendar"></span>
-                </div>
-                <input type="text" id="date" name="date" class="form-control appointment_date" placeholder="Date*" />
-              </div>
-            </div>
-            <div class="form-group ml-md-4">
-              <div class="input-wrap">
-                <div class="icon"><span class="ion-ios-clock"></span></div>
-                <input type="text" id="time" name="time" class="form-control appointment_time" placeholder="Time*" />
-              </div>
-            </div>
-            <div class="form-group ml-md-4">
-              <input type="text" id="phone" name="phone" class="form-control" placeholder="Phone*" />
-            </div>
-          </div>
-          <div class="d-md-flex">
-            <div class="form-group">
-              <textarea name="message" cols="30" rows="2" class="form-control" placeholder="Message"></textarea>
-            </div>
-            <div class="form-group ml-md-4">
-              <?php if (isset($_SESSION['user_id'])) { ?>
-                <button type="submit" name="submit" class="btn btn-white py-3 px-4">Book a Table</button>
-              <?php } else { ?>
-                <a href="auth/login.php" class="btn btn-white py-3 px-4">Login to Book Table</a>
-              <?php } ?>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
+<?php include 'includes/info.php'; ?>
 
 <section class="ftco-about d-md-flex">
   <div class="one-half img" style="background-image: url(images/about.jpg)"></div>
@@ -301,48 +220,6 @@
   </div>
 </section>
 
-<section class="ftco-section">
-  <div class="container">
-    <div class="row justify-content-center mb-5 pb-3">
-      <div class="col-md-7 heading-section ftco-animate text-center">
-        <span class="subheading">Discover</span>
-        <h2 class="mb-4">Best Coffee Sellers</h2>
-        <p>
-          Deep within the heart of Taruh, far from the noise of fast flavors and fleeting trends, rest our finest creations—crafted with soul, steeped in warmth, and chosen by those who know taste isn’t rushed, it’s remembered.
-        </p>
-      </div>
-    </div>
-    <div class="row">
-      <?php
-
-      $sql = "SELECT * FROM products WHERE type = 'coffee'";
-      $result = mysqli_query($conn, $sql) or die("Query Unsuccessful");
-
-      if (mysqli_num_rows($result) > 0) {
-
-        while ($product = mysqli_fetch_assoc($result)) {
-
-      ?>
-          <div class="col-md-3">
-            <div class="menu-entry">
-              <a target="_blank" href="products/product-single.php?id=<?php echo $product['id']; ?>" class="img" style="background-image: url(images/<?php echo $product['image']; ?>)"></a>
-              <div class="text text-center pt-4">
-                <h3><a href="#"><?php echo $product['name']; ?></a></h3>
-                <p>
-                  <?php echo $product['description']; ?>
-                </p>
-                <p class="price"><span>$<?php echo $product['price']; ?></span></p>
-                <p>
-                  <a href="products/product-single.php?id=<?php echo $product['id']; ?>" class="btn btn-primary btn-outline-primary">Show</a>
-                </p>
-              </div>
-            </div>
-          </div>
-      <?php }
-      } ?>
-    </div>
-  </div>
-</section>
 
 <section class="ftco-gallery">
   <div class="container-wrap">
@@ -387,8 +264,7 @@
         <span class="subheading">Testimony</span>
         <h2 class="mb-4">Customers Says</h2>
         <p>
-          Far far away, behind the word mountains, far from the countries
-          Vokalia and Consonantia, there live the blind texts.
+         Beyond the noise of daily routines, across countless cups and quiet corners, their voices echo—honest, warm, and brewed with the stories only real sips can tell.
         </p>
       </div>
     </div>
@@ -399,9 +275,7 @@
         <div class="testimony">
           <blockquote>
             <p>
-              &ldquo;Even the all-powerful Pointing has no control about the
-              blind texts it is an almost unorthographic life One day
-              however a small.&rdquo;
+              &ldquo;Di balik hiruk-pikuk kota dan lelah yang tak terucap, Teduh selalu jadi tempat pulang—dengan cangkir hangat dan senyum yang terasa tulus sejak pertama kali datang.&rdquo;
             </p>
           </blockquote>
           <div class="author d-flex mt-4">
@@ -409,8 +283,8 @@
               <img src="images/person_1.jpg" alt="" />
             </div>
             <div class="name align-self-center">
-              Louise Kelly
-              <span class="position">Illustrator Designer</span>
+              Zein Hasyim
+              <span class="position">Mahasiswa Teknik Informatika</span>
             </div>
           </div>
         </div>
@@ -419,10 +293,7 @@
         <div class="testimony overlay">
           <blockquote>
             <p>
-              &ldquo;Even the all-powerful Pointing has no control about the
-              blind texts it is an almost unorthographic life One day
-              however a small line of blind text by the name of Lorem Ipsum
-              decided to leave for the far World of Grammar.&rdquo;
+              &ldquo;Kadang kita hanya butuh tempat yang tidak banyak tanya, hanya menyediakan ketenangan dan aroma kopi yang tahu cara memeluk hari—itulah Teduh untuk saya.&rdquo;
             </p>
           </blockquote>
           <div class="author d-flex mt-4">
@@ -430,8 +301,8 @@
               <img src="images/person_2.jpg" alt="" />
             </div>
             <div class="name align-self-center">
-              Louise Kelly
-              <span class="position">Illustrator Designer</span>
+              M.Rafli
+              <span class="position">Palugada</span>
             </div>
           </div>
         </div>
@@ -440,9 +311,7 @@
         <div class="testimony">
           <blockquote>
             <p>
-              &ldquo;Even the all-powerful Pointing has no control about the
-              blind texts it is an almost unorthographic life One day
-              however a small line of blind text by the name. &rdquo;
+              &ldquo;Bukan sekadar café, tapi ruang di mana pelanggan dipanggil dengan nama, bukan nomor; dan setiap tegukan terasa seperti cerita yang diseduh perlahan.&rdquo;
             </p>
           </blockquote>
           <div class="author d-flex mt-4">
@@ -450,8 +319,8 @@
               <img src="images/person_3.jpg" alt="" />
             </div>
             <div class="name align-self-center">
-              Louise Kelly
-              <span class="position">Illustrator Designer</span>
+              Taufik Aji
+              <span class="position">Profesional Event Organizer</span>
             </div>
           </div>
         </div>
@@ -460,9 +329,7 @@
         <div class="testimony overlay">
           <blockquote>
             <p>
-              &ldquo;Even the all-powerful Pointing has no control about the
-              blind texts it is an almost unorthographic life One day
-              however.&rdquo;
+              &ldquo;Dari barista yang ingat pesanan favorit saya, sampai bangku sudut yang selalu kosong seperti sedang menunggu—Teduh tahu caranya membuat orang merasa ada.&rdquo;
             </p>
           </blockquote>
           <div class="author d-flex mt-4">
@@ -470,8 +337,8 @@
               <img src="images/person_2.jpg" alt="" />
             </div>
             <div class="name align-self-center">
-              Louise Kelly
-              <span class="position">Illustrator Designer</span>
+              Firza Harada
+              <span class="position">Pembalap Motor</span>
             </div>
           </div>
         </div>
@@ -480,9 +347,7 @@
         <div class="testimony">
           <blockquote>
             <p>
-              &ldquo;Even the all-powerful Pointing has no control about the
-              blind texts it is an almost unorthographic life One day
-              however a small line of blind text by the name. &rdquo;
+              &ldquo;Mungkin dunia tak selalu ramah, tapi di Teduh, rasanya seperti ada jeda kecil dari semesta—dengan kopi yang tahu cara mendengar, bukan hanya menghangatkan. &rdquo;
             </p>
           </blockquote>
           <div class="author d-flex mt-4">
@@ -490,8 +355,8 @@
               <img src="images/person_3.jpg" alt="" />
             </div>
             <div class="name align-self-center">
-              Louise Kelly
-              <span class="position">Illustrator Designer</span>
+              Fahriansyah
+              <span class="position">Polisi</span>
             </div>
           </div>
         </div>

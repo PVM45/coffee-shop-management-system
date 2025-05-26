@@ -51,3 +51,7 @@ if (!$koneksi) {
 if (!$conn) {
     die("❌ Connection failed: " . mysqli_connect_error());
 }
+
+
+$current_page = basename($_SERVER['PHP_SELF']);
+?>

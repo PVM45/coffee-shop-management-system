@@ -19,8 +19,13 @@ if (isset($_POST['submit'])) {
     // sql query
     $query = "INSERT INTO users (username, email, password) VALUES ('{$username}','{$email}','{$password}')";
     mysqli_query($conn, $query) or die("Query Unsuccessful");
+    
+     // ✅ Set session alert
+    $_SESSION['register_success'] = "Registrasi berhasil! Silakan login.";
+
     // redirect to login page
     header("Location: login.php");
+    exit();
   }
 }
 ?>
@@ -52,19 +57,22 @@ if (isset($_POST['submit'])) {
             <div class="col-md-12">
               <div class="form-group">
                 <label for="Username">Username</label>
-                <input type="text" name="username" class="form-control" placeholder="Username" />
+                <input type="text" name="username" class="form-control" placeholder="Username" pattern="^[a-zA-Z0-9_]{3,20}$" 
+                  title="3-20 characters. Letters, numbers, and underscores only." required/>
               </div>
             </div>
             <div class="col-md-12">
               <div class="form-group">
                 <label for="Email">Email</label>
-                <input type="text" name="email" class="form-control" placeholder="Email" />
+                <input type="email" name="email" class="form-control" placeholder="Email"  pattern="^[\w\.-]+@([\w-]+\.)+[a-zA-Z]{2,6}$" 
+                 title="Enter a valid email address (e.g. name@example.com)" required />
               </div>
             </div>
             <div class="col-md-12">
               <div class="form-group">
                 <label for="Password">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Password" />
+                <input type="password" name="password" class="form-control" placeholder="Password"   pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,}$" 
+               title="At least 6 characters, including 1 letter and 1 number." required/>
               </div>
             </div>
             <div class="col-md-12">

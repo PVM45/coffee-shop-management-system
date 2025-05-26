@@ -2,15 +2,30 @@
 session_start();
 require_once __DIR__ . '/../config/config.php'; // Include the configuration file
 ?>
-
+<?php
+if (isset($_SESSION['login_success'])) {
+  echo "
+    <script>
+      Swal.fire({
+        icon: 'success',
+        title: 'Login Berhasil!',
+        text: '{$_SESSION['login_success']}',
+        timer: 3000,
+        showConfirmButton: false
+      });
+    </script>
+  ";
+  unset($_SESSION['login_success']); // Hapus setelah tampil
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="NS Coffee offers a delicious taste of freshly brewed coffee, a variety of menu options, and excellent services. Visit us to enjoy a great coffee experience." />
-  <title>NS Coffee | Delicious Taste</title>
+  <meta name="description" content="Taruh Coffee offers a delicious taste of freshly brewed coffee, a variety of menu options, and excellent services. Visit us to enjoy a great coffee experience." />
+  <title>Taruh Coffee | Delicious Taste</title>
   <link rel="icon" type="image/x-icon" href="<?php echo url; ?>/images/logo.png">
   <!-- Poppins -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -46,6 +61,13 @@ require_once __DIR__ . '/../config/config.php'; // Include the configuration fil
   <link rel="stylesheet" href="<?php echo url; ?>/css/icomoon.css" />
   <!-- main style -->
   <link rel="stylesheet" href="<?php echo url; ?>/css/style.css">
+  <!-- flatpickr -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<!-- SweetAlert2 for better alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 </head>
 
 <body>
@@ -57,21 +79,16 @@ require_once __DIR__ . '/../config/config.php'; // Include the configuration fil
       </button>
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a href="<?php echo url; ?>/index.php" class="nav-link">Home</a>
-          </li>
-          <li class="nav-item">
-            <a href="<?php echo url; ?>/menu.php" class="nav-link">Menu</a>
-          </li>
-          <li class="nav-item">
-            <a href="<?php echo url; ?>/services.php" class="nav-link">Services</a>
-          </li>
-          <li class="nav-item">
-            <a href="<?php echo url; ?>/about.php" class="nav-link">About</a>
-          </li>
-          <li class="nav-item">
-            <a href="<?php echo url; ?>/contact.php" class="nav-link">Contact</a>
-          </li>
+        <li class="nav-item <?php echo ($current_page == 'index.php') ? 'active' : ''; ?>">
+          <a href="<?php echo url; ?>/index.php" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item <?php echo ($current_page == 'menu.php') ? 'active' : ''; ?>">
+          <a href="<?php echo url; ?>/menu.php" class="nav-link">Menu</a>
+        </li>
+        <li class="nav-item <?php echo ($current_page == 'contact.php') ? 'active' : ''; ?>">
+          <a href="<?php echo url; ?>/contact.php" class="nav-link">Contact</a>
+        </li>
+
           <?php if (isset($_SESSION['username'])) {
           ?>
             <!-- show logout button if user is logged in -->

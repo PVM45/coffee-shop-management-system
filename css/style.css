@@ -12084,3 +12084,16 @@ textarea.form-control {
     stroke-dashoffset: -136px;
   }
 }
+
+  .appointment_time {
+    background-color: #333;
+    color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .flatpickr-time input,
+  .flatpickr-am-pm {
+    color: black; /* penting supaya angka dan AM/PM tetap kelihatan */
+  }

@@ -65,22 +65,22 @@ if (isset($_GET['id'])) {
 				</div>
 				<div class="col-lg-6 product-details pl-md-5 ftco-animate">
 					<h3><?php echo $product['name']; ?></h3>
-					<p class="price"><span>$<?php echo $product['price']; ?></span></p>
-					<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-					<p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.
-					</p>
+					<p class="price"><span>RP.<?php echo $product['price']; ?></span></p>
+					<p class=""><span><?php echo $product['description']; ?></span></p>
+
+					
 					<form action="product-single.php?id=<?php echo $product['id']; ?>" method="post">
 						<div class="row mt-4">
 							<div class="col-md-6">
 								<div class="form-group d-flex">
 									<div class="select-wrap">
-										<div class="icon"><span class="ion-ios-arrow-down"></span></div>
-										<select name="size" class="form-control">
+										<!-- <div class="icon"><span class="ion-ios-arrow-down"></span></div> -->
+										<!-- <select name="size" class="form-control">
 											<option value="Small">Small</option>
 											<option value="Medium">Medium</option>
 											<option value="Large">Large</option>
 											<option value="Extra Large">Extra Large</option>
-										</select>
+										</select> -->
 									</div>
 								</div>
 							</div>
@@ -136,7 +136,6 @@ if (isset($_GET['id'])) {
 				<div class="col-md-7 heading-section ftco-animate text-center">
 					<span class="subheading">Discover</span>
 					<h2 class="mb-4">Related products</h2>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
 				</div>
 			</div>
 			<div class="row">

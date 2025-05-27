@@ -56,7 +56,36 @@
           </div>
           <div class="d-md-flex">
             <div class="form-group">
-              <textarea name="message" id="message" class="form-control" placeholder="Message"></textarea>
+                <textarea name="message" id="message" class="form-control" placeholder="Message"></textarea>
+                <script>
+                  const textarea = document.getElementById('message');
+
+                   textarea.addEventListener('input', () => {
+    const allowedPattern = /[^a-zA-Z0-9 .,?!-]/g;
+    if (allowedPattern.test(textarea.value)) {
+      // Remove invalid characters
+      textarea.value = textarea.value.replace(allowedPattern, '');
+
+      // SweetAlert2 popup
+      Swal.fire({
+        icon: 'warning',
+        title: 'Oops!',
+        text: '⚠️ Hanya huruf, angka, spasi, dan tanda baca dasar (. , ? ! -) yang diperbolehkan.',
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        position: 'top-end',
+        toast: true,
+        background: '#fff3cd',
+        color: '#856404',
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      });
+    }
+  });
+                </script>
             </div>
             <div class="form-group ml-md-4">
               <?php if (isset($_SESSION['user_id'])) { ?>

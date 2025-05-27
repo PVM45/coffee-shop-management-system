@@ -1,48 +1,63 @@
 <?php require_once "../layouts/header.php"; ?>
-
 <?php
+// Only allow access if user is admin
+// session_start();
+// if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+//   header("Location: " . url . "/auth/login.php");
+//   exit();
+// }
 
-// Code for admin registration 
+// Admin registration logic
 if (isset($_POST['submit'])) {
-  if (empty($_POST['name']) or empty($_POST['email']) or empty($_POST['password'])) {
-    echo "<script>alert('One or more inputs are empty !!')</script>";
+  $name     = trim($_POST['username']);
+  $email    = trim($_POST['email']);
+  $password = $_POST['password'];
+
+  if (empty($name) || empty($email) || empty($password)) {
+    echo "<script>alert('⚠️ Please fill out all fields.')</script>";
   } else {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    // $password = password_hash($_POST['password'],PASSWORD_DEFAULT); 
+    // Check if email already exists
+    $check_query = "SELECT * FROM users WHERE email = '$email'";
+    $check_result = mysqli_query($conn, $check_query);
 
-    // SQL query
-    $query = "INSERT INTO admins (admin_name, email, password) VALUES ('{$name}','{$email}','{$password}')";
-    mysqli_query($conn, $query) or die("Query Unsuccessful");
+    if (mysqli_num_rows($check_result) > 0) {
+      echo "<script>alert('❌ Email already registered!')</script>";
+    } else {
+      // Hash the password
+      $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    echo "<script>alert('New Admin Added Successfully !!')</script>";
-    // Redirect to the same page dynamically
-    echo "<script>window.location.href='" . url . "/admin-panel/admins/create-admins.php'</script>";
+      // Insert into users table with role = 'admin'
+      $query = "INSERT INTO users (username, email, password, role) VALUES ('$name', '$email', '$hashed_password', 'admin')";
+      $insert_result = mysqli_query($conn, $query);
+
+      if ($insert_result) {
+        echo "<script>alert('✅ Admin created successfully!')</script>";
+        echo "<script>window.location.href='" . ADMINURL . "/index.php'</script>";
+      } else {
+        echo "<script>alert('❌ Failed to create admin.')</script>";
+      }
+    }
   }
 }
-
 ?>
 
 <div class="container-fluid">
   <div class="row">
     <div class="col">
-      <div class="card">
+      <div class="card shadow-sm">
         <div class="card-body">
-          <h5 class="card-title mb-5 d-inline">Create Admins</h5>
-          <form method="POST" action="create-admins.php" enctype="multipart/form-data">
+          <h5 class="card-title mb-5">Create New Admin</h5>
+          <form method="POST" action="" enctype="multipart/form-data">
+            <div class="form-outline mb-3">
+              <input type="text" name="username" class="form-control" placeholder="Name" required />
+            </div>
+            <div class="form-outline mb-3">
+              <input type="email" name="email" class="form-control" placeholder="Email" required />
+            </div>
             <div class="form-outline mb-4">
-              <input type="text" name="name" class="form-control" placeholder="name" />
+              <input type="password" name="password" class="form-control" placeholder="Password" required />
             </div>
-            <!-- Email input -->
-            <div class="form-outline mb-4 mt-4">
-              <input type="email" name="email" class="form-control" placeholder="email" />
-            </div>
-            <div class="form-outline mb-4">
-              <input type="password" name="password" class="form-control" placeholder="password" />
-            </div>
-            <!-- Submit button -->
-            <button type="submit" name="submit" class="btn btn-primary  mb-4 text-center">create</button>
+            <button type="submit" name="submit" class="btn btn-success">Create Admin</button>
           </form>
         </div>
       </div>
@@ -50,5 +65,4 @@ if (isset($_POST['submit'])) {
   </div>
 </div>
 </body>
-
 </html>

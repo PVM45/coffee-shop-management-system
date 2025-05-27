@@ -1,0 +1,8 @@
+
+<div class="form-group ml-md-4">
+              <?php if (isset($_SESSION['user_id'])) { ?>
+                <button type="submit" name="submit" class="btn btn-primary py-3 px-5">Send Message</button>
+              <?php } else { ?>
+                <a href="auth/login.php" class="btn btn-primary py-3 px-5">Login to Send Message</a>
+              <?php } ?>
+  </div>

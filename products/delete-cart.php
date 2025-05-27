@@ -23,8 +23,17 @@ mysqli_query($conn, $query) or die("Query Unsuccessful");
 
 
 echo "<script>
-          alert('Order placed successfully');
-          window.location.href = 'cart.php';
+           Swal.fire({
+        icon: 'success',
+        title: 'Order Successful!',
+        text: 'Thank you! Your order has been received and is being processed.',
+        confirmButtonText: 'View Cart',
+        confirmButtonColor: '#3085d6'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'cart.php';
+        }
+    });
         </script>";
 
-?>
+?> 

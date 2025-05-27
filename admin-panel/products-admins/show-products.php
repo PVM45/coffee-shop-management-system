@@ -4,9 +4,10 @@
 
 // if admin not logged in
 // denied to access this page
-if (!isset($_SESSION['admin_name'])) {
+// Cegah akses jika admin belum login
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
   header("Location: " . url . "/index.php");
-  exit();
+  exit;
 }
 
 //fetch all orders from db

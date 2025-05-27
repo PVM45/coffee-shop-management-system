@@ -94,7 +94,7 @@
                             <p>
                               <?php echo $drink['description']; ?>
                             </p>
-                            <p class="price"><span>$<?php echo $drink['price']; ?></span></p>
+                            <p class="price"><span>RP.<?php echo $drink['price']; ?></span></p>
                             <p>
                               <a href="products/product-single.php?id=<?php echo $drink['id']; ?>" class="btn btn-primary btn-outline-primary">Show</a>
                             </p>
@@ -124,7 +124,7 @@
                             <p>
                               <?php echo $dessert['description']; ?>
                             </p>
-                            <p class="price"><span>$<?php echo $dessert['price']; ?></span></p>
+                            <p class="price"><span>RP.<?php echo $dessert['price']; ?></span></p>
                             <p>
                               <a href="products/product-single.php?id=<?php echo $dessert['id']; ?>" class="btn btn-primary btn-outline-primary">Show</a>
                             </p>
@@ -154,7 +154,7 @@
                             <p>
                               <?php echo $dessert['description']; ?>
                             </p>
-                            <p class="price"><span>$<?php echo $dessert['price']; ?></span></p>
+                            <p class="price"><span>RP.<?php echo $dessert['price']; ?></span></p>
                             <p>
                               <a href="products/product-single.php?id=<?php echo $dessert['id']; ?>" class="btn btn-primary btn-outline-primary">Show</a>
                             </p>

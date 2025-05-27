@@ -2,6 +2,16 @@
 
 <?php
 
+function generateOrderCode($length = 8) {
+  $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  $charactersLength = strlen($characters);
+  $randomCode = '';
+  for ($i = 0; $i < $length; $i++) {
+    $randomCode .= $characters[rand(0, $charactersLength - 1)];
+  }
+  return $randomCode;
+}
+
 // if user logged in trying to directly access checkout page
 // denied to access
 if (!isset($_SERVER['HTTP_REFERER'])) {
@@ -11,32 +21,23 @@ if (!isset($_SERVER['HTTP_REFERER'])) {
 
 // if user not logged in
 // denied to access cart page
-if (!isset($_SESSION['user_id'])) {
-  header("Location: " . url . "/index.php"); // Redirect to the home page
-  exit();
-}
-
 if (isset($_POST['submit'])) {
-  $first_name = $_POST['first-name'];
-  $last_name = $_POST['last-name'];
-  $country = $_POST['country']; //state/country
-  $street_address = $_POST['street-address'];
-  $town_city = $_POST['town-or-city'];
-  $zip_code = $_POST['postcode-or-zip'];
-  $phone = $_POST['phone'];
-  $email = $_POST['email'];
   $user_id = $_SESSION['user_id'];
   $status = "pending";
   $total_price = $_SESSION['total_price'];
+  $order_code = generateOrderCode();
 
-  // sql query
-  $query = "INSERT INTO orders (first_name, last_name, country, street_address, town, zip_code, phone, email, user_id, status, total_price) VALUES ('{$first_name}','{$last_name}','{$country}','{$street_address}','{$town_city}','{$zip_code}','{$phone}','{$email}','{$user_id}','{$status}','{$total_price}')";
+  // query insert
+  $query = "INSERT INTO orders (user_id, order_code, total_price, status) 
+            VALUES ('{$user_id}', '{$order_code}', '{$total_price}', '{$status}')";
   mysqli_query($conn, $query) or die("Query Unsuccessful");
 
-  echo "<script>
-          window.location.href = 'delete-cart.php';
-        </script>";
+        echo "<script>
+        window.location.href = '../users/orders.php?code={$order_code}';
+      </script>";
+
 }
+
 ?>
 
 <section class="home-slider owl-carousel">
@@ -61,85 +62,9 @@ if (isset($_POST['submit'])) {
     <div class="row">
       <div class="col-md-12 ftco-animate">
         <form action="checkout.php" method="post" class="billing-form ftco-bg-dark p-3 p-md-5">
-          <h3 class="mb-4 billing-heading">Billing Details</h3>
-          <div class="row align-items-end">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="first-name">First Name *</label>
-                <input type="text" id="first-name" name="first-name" class="form-control" placeholder="" />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="last-name">Last Name</label>
-                <input type="text" id="last-name" name="last-name" class="form-control" placeholder="" />
-              </div>
-            </div>
-            <div class="w-100"></div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <label for="country">State / Country *</label>
-                <div class="select-wrap">
-                  <div class="icon">
-                    <span class="ion-ios-arrow-down"></span>
-                  </div>
-                  <select name="country" id="country" class="form-control">
-                    <option value="" selected hidden>Select State/Country</option>
-                    <option value="France">France</option>
-                    <option value="Italy">Italy</option>
-                    <option value="India">India</option>
-                    <option value="Philippines">Philippines</option>
-                    <option value="South Korea">South Korea</option>
-                    <option value="Hongkong">Hongkong</option>
-                    <option value="Japan">Japan</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="w-100"></div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <label for="street-address">Street Address *</label>
-                <input type="text" id="street-address" name="street-address" class="form-control" placeholder="House number and street name" />
-              </div>
-            </div>
-            <div class="w-100"></div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="town-or-city">Town / City *</label>
-                <input type="text" id="town-or-city" name="town-or-city" class="form-control" placeholder="" />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="postcode-or-zip">Postcode / ZIP *</label>
-                <input type="text" id="postcode-or-zip" name="postcode-or-zip" class="form-control" placeholder="" />
-              </div>
-            </div>
-            <div class="w-100"></div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="phone">Phone *</label>
-                <input type="text" id="phone" name="phone" class="form-control" placeholder="" />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="email">Email Address *</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="" />
-              </div>
-            </div>
-            <div class="w-100"></div>
-            <div class="col-md-12">
-              <div class="form-group mt-4">
-                <div class="radio">
-                  <p>
-                    <button type="submit" name="submit" id="submit" class="btn btn-primary py-3 px-4">Place an order</button>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <h3 class="mb-4">Confirm Your Order</h3>
+          <p>Total: <strong>Rp <?php echo $_SESSION['total_price']; ?></strong></p>
+          <button type="submit" name="submit" class="btn btn-primary py-3 px-4">Place Order</button>
         </form>
       </div>
       <!-- .col-md-8 -->
@@ -149,24 +74,7 @@ if (isset($_POST['submit'])) {
 <!-- .section -->
 
 <script>
-  const billingForm = document.querySelector(".billing-form");
-
-  // input fields
-  const firstName = document.querySelector("#first-name");
-  const lastName = document.querySelector("#last-name");
-  const country = document.querySelector("#country");
-  const streetAddress = document.querySelector("#street-address");
-  const townCity = document.querySelector("#town-or-city");
-  const postcodeZip = document.querySelector("#postcode-or-zip");
-  const phone = document.querySelector("#phone");
-  const email = document.querySelector("#email");
-
-  billingForm.addEventListener("submit", (e) => {
-    if (firstName.value === "" || country.value === "" || streetAddress.value === "" || townCity.value === "" || postcodeZip.value === "" || phone.value === "" || email.value === "") {
-      e.preventDefault();
-      alert("Please fill all the details !!");
-    }
-  })
+  
 </script>
 
 <?php require_once "../includes/footer.php"; ?>

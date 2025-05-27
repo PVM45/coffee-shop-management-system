@@ -83,7 +83,7 @@ if (isset($_POST['checkout'])) {
                       </p>
                     </td>
 
-                    <td class="price">$<?php echo $row['price']; ?></td>
+                    <td class="price">RP.<?php echo $row['price']; ?></td>
 
                     <td>
                       <div class="input-group mb-3">
@@ -91,7 +91,7 @@ if (isset($_POST['checkout'])) {
                       </div>
                     </td>
 
-                    <td class="total">$<?php echo $row['price'] * $row['quantity']; ?></td>
+                    <td class="total">RP.<?php echo $row['price'] * $row['quantity']; ?></td>
                   </tr>
                 <?php }
               } else { ?>
@@ -114,46 +114,28 @@ if (isset($_POST['checkout'])) {
           <h3>Cart Totals</h3>
           <p class="d-flex">
             <span>Subtotal</span>
-            <span>$<?php
+            <span>RP.<?php
                     if ($total['total'] > 0) {
                       # code...
-                      echo number_format($total['total'], 2, '.', "");
-                    } else echo "0.00";
+                      echo $total['total'];
+                    } else echo "00.00";
                     ?>
             </span>
-          </p>
-          <p class="d-flex">
-            <span>Delivery</span>
-            <span>$<?php
-                    if ($total['total'] > 0) {
-                      # code...
-                      echo "5.00";
-                    } else echo "0.00";
-                    ?></span>
-          </p>
-          <p class="d-flex">
-            <span>Discount</span>
-            <span>$<?php
-                    if ($total['total'] > 0) {
-                      # code...
-                      echo "3.00";
-                    } else echo "0.00";
-                    ?></span>
           </p>
           <hr />
           <p class="d-flex total-price">
             <span>Total</span>
-            <span>$<?php
+            <span>RP.<?php
                     if ($total['total'] > 0) {
                       # code...
 
-                      echo number_format($total['total'] + 5 - 3, 2, '.', "");
-                    } else echo "0.00";
+                      echo $total['total'];
+                    } else echo "00.00";
                     ?></span>
           </p>
         </div>
         <form action="cart.php" method="post">
-          <input hidden name="total-price" type="text" value="<?php echo $total['total'] + 5 - 3; ?>">
+          <input hidden name="total-price" type="text" value="<?php echo $total['total']; ?>">
           <?php if ($total['total'] > 0) { ?>
             <button class="btn btn-primary py-3 px-4" name="checkout" type="submit">Proceed to Checkout</button>
           <?php } ?>

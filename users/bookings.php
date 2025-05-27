@@ -40,8 +40,7 @@ $result = mysqli_query($conn, $query) or die("Query Unsuccessful");
                     <table class="table">
                         <thead class="thead-primary">
                             <tr class="text-center">
-                                <th>First Name</th>
-                                <th>Last Name</th>
+                                <th>Userame</th>
                                 <th>Date</th>
                                 <th>Time</th>
                                 <th>Phone</th>
@@ -56,10 +55,7 @@ $result = mysqli_query($conn, $query) or die("Query Unsuccessful");
                             ?>
                                     <tr class="text-center">
                                         <td>
-                                            <?php echo $booking['first_name']; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $booking['last_name']; ?>
+                                            <?php echo $booking['username']; ?>
                                         </td>
                                         <td>
                                             <?php echo $booking['date']; ?>

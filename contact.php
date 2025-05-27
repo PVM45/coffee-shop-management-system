@@ -27,52 +27,70 @@
           </div>
           <div class="col-md-12 mb-3">
             <p>
-              <span>Address:</span> 198 West 21th Street, Suite 721 New York
-              NY 10016
+              <span>Address:</span> Jl. Deposito No.39, Titi Papan, Kec. Medan Deli, Kota Medan, Sumatera Utara 20242
             </p>
           </div>
           <div class="col-md-12 mb-3">
             <p>
               <span>Phone:</span>
-              <a href="tel://1234567920">+91 1235 2355 98</a>
+              <a href="tel://1234567920">0812 3412 3412</a>
             </p>
           </div>
           <div class="col-md-12 mb-3">
             <p>
               <span>Email:</span>
-              <a href="mailto:info@yoursite.com">info@yoursite.com</a>
+              <a href="mailto:info@yoursite.com">Taruhco@gmail.com</a>
             </p>
           </div>
           <div class="col-md-12 mb-3">
-            <p><span>Website:</span> <a href="#">yoursite.com</a></p>
+            <p><span>Website:</span> <a href="#">taruhco.com</a></p>
           </div>
         </div>
       </div>
       <div class="col-md-1"></div>
       <div class="col-md-6 ftco-animate">
-        <form action="#" class="contact-form">
+        <form action="feedback.php" method="post" class="contact-form">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Name" />
+                <input type="text" name="name" class="form-control" required pattern="^[A-Za-z\s]{3,50}$" placeholder="Your Name" />
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Email" />
+                <input type="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control" placeholder="Your Email" />
               </div>
             </div>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Subject" />
+            <input type="text" name="subject" required minlength="3" maxlength="100" class="form-control" placeholder="Subject" />
           </div>
           <div class="form-group">
-            <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+            <textarea name="message" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
           </div>
           <div class="form-group">
-            <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5" />
+            <input type="submit" name="submit" value="Send Message" class="btn btn-primary py-3 px-5" />
           </div>
         </form>
+        <?php if (isset($_GET['status']) && $_GET['status'] == 'sukses'): ?>
+    <script>
+      Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: 'Email berhasil dikirim!',
+        confirmButtonText: 'Oke'
+      });
+    </script>
+  <?php elseif (isset($_GET['status']) && $_GET['status'] == 'gagal'): ?>
+    <script>
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops!',
+        text: 'Email gagal dikirim!',
+        confirmButtonText: 'Coba Lagi'
+      });
+    </script>
+  <?php endif; ?>
       </div>
     </div>
   </div>

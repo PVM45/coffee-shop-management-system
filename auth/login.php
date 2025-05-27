@@ -38,13 +38,23 @@ if (isset($_POST['submit'])) {
           $_SESSION['username'] = $row['username'];
           $_SESSION['email'] = $row['email'];
           $_SESSION['user_id'] = $row['id'];
+          $_SESSION['role'] = $row['role'];
           // redirect to index page
-
-          // echo "<script>alert('Logged in Successfully')</script>";
-          // echo "<script>window.location.href = '" . url . "/index.php';</script>";
+           if ($row['role'] == 'admin') {
+          echo "<script>
+            Swal.fire({
+              icon: 'success',
+              title: 'Login Admin Berhasil!',
+              text: 'Selamat datang, {$row['username']}',
+            }).then(() => {
+              window.location.href = '" . url . "/admin-panel/index.php';
+            });
+          </script>";
+        } else {
           $_SESSION['login_success'] = "Kamu berhasil login. Selamat datang, {$row['username']}!";
           echo "<script>window.location.href = '" . url . "/index.php';</script>";
-          exit();
+        }
+        exit();
 
         } else {
           echo "

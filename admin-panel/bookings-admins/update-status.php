@@ -10,10 +10,11 @@ if (!isset($_SERVER['HTTP_REFERER'])) {
 
 // if admin not logged in
 // denied to access this page
-if (!isset($_SESSION['admin_name'])) {
-    header("Location: " . url . "/admin-panel");
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    header("Location: " . url . "/auth/login.php");
     exit();
 }
+
 
 // check for order id received or not
 $booking_id = isset($_GET['id']) ? $_GET['id'] : null;
@@ -24,7 +25,15 @@ if (!$booking_id) {
 // update Bookings status
 if (isset($_POST['submit'])) {
     if (empty($_POST['order-status'])) {
-        echo "<script>alert('please select status !!')</script>";
+        echo "<script>
+    Swal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: 'Silakan pilih status terlebih dahulu!',
+        confirmButtonColor: '#3085d6'
+    });
+</script>";
+
     } else {
 
         $order_status = $_POST['order-status'];
@@ -32,8 +41,20 @@ if (isset($_POST['submit'])) {
         $update_query = "UPDATE bookings SET status = '{$order_status}' WHERE id = '{$booking_id}'";
         mysqli_query($conn, $update_query) or die("Query Unsuccessful");
 
-        echo "<script>alert('Order Status Updated !!')</script>";
-        echo "<script>window.location.href = '" . url . "/admin-panel/bookings-admins/show-bookings.php'</script>";
+       echo "<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: 'Status pemesanan telah diperbarui.',
+        showConfirmButton: true,
+        confirmButtonColor: '#3085d6'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = '" . url . "/admin-panel/bookings-admins/show-bookings.php';
+        }
+    });
+</script>";
+
     }
 }
 

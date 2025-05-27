@@ -3,8 +3,8 @@
 <?php
 
 // If admin is not logged in, redirect to the login page
-if (!isset($_SESSION['admin_name'])) {
-  header("Location: " . url . "/admin-panel/admins/login.php");
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+  header("Location: " . url . "/auth/login.php"); // atau halaman login umum kamu
   exit();
 }
 
@@ -30,11 +30,12 @@ if (mysqli_num_rows($booking_result) > 0) {
 }
 
 // admins
-$admin_query = "SELECT COUNT(*) AS count FROM admins";
+$admin_query = "SELECT COUNT(*) AS count FROM users WHERE role = 'admin'";
 $admin_result = mysqli_query($conn, $admin_query) or die("Query Unsuccessful");
 if (mysqli_num_rows($admin_result) > 0) {
   $admins_count = mysqli_fetch_assoc($admin_result);
 }
+
 
 ?>
 

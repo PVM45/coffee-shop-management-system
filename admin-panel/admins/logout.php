@@ -1,10 +1,19 @@
 <?php
-
+// Start session and config
 session_start();
+require_once __DIR__ . '/../../config/config.php';
+
+// Unset all session variables
+$_SESSION = [];
+
+// Destroy session
 session_unset();
 session_destroy();
 
-require_once __DIR__ . '/../../config/config.php'; // Include the configuration file
+// Prevent back navigation after logout
+header("Cache-Control: no-cache, must-revalidate");
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 
-header("Location:" . url . "/admin-panel/admins/login.php"); // Redirect to Admin login page
+// Redirect to login page
+header("Location: " . url . "/auth/login.php");
 exit();
